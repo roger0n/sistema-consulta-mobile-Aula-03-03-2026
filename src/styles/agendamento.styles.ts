@@ -1,5 +1,4 @@
 import { StyleSheet } from "react-native";
-
 const styles = StyleSheet.create({
  container: {
  flex: 1,
@@ -18,7 +17,7 @@ const styles = StyleSheet.create({
  titulo: {
  fontSize: 28,
  fontWeight: "bold",
- color: "#79059C",
+ color: "#2196F3",
  marginBottom: 16,
  },
  descricao: {
@@ -38,7 +37,7 @@ const styles = StyleSheet.create({
  alignItems: "center",
  },
  botaoPrimario: {
- backgroundColor: "#79059C",
+ backgroundColor: "#2196F3",
  },
  botaoSecundario: {
  backgroundColor: "#4CAF50",
@@ -46,7 +45,7 @@ const styles = StyleSheet.create({
  botaoTerciario: {
  backgroundColor: "transparent",
  borderWidth: 2,
- borderColor: "#79059C",
+ borderColor: "#2196F3",
  },
  botaoTexto: {
  color: "#fff",
@@ -54,9 +53,9 @@ const styles = StyleSheet.create({
  fontSize: 16,
  },
  botaoTextoSecundario: {
- color: "#79059C",
+ color: "#2196F3",
  fontWeight: "bold",
  fontSize: 16,
  },
-});
+}); 
 export default styles;

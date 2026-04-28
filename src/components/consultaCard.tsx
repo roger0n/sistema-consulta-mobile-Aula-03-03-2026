@@ -101,18 +101,17 @@ export default function ConsultaCard({
 }
 
 const styles = StyleSheet.create({
-  card: {
-    backgroundColor: "#fff",
-    borderRadius: 12,
-    padding: 16,
-    marginVertical: 8,
-    marginHorizontal: 16,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-  },
+ // ✅ DEPOIS (nova sintaxe boxShadow - Expo SDK 52+)
+card: {
+ backgroundColor: "#fff",
+ borderRadius: 12,
+ padding: 16,
+ marginVertical: 8,
+ marginHorizontal: 16,
+ boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+ elevation: 3,
+},
+
   statusBadge: {
     alignSelf: "flex-start",
     paddingHorizontal: 12,
