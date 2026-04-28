@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "sistema-consulta-mobile-Aula-03-03-2026",
-    "slug": "sistema-consulta-mobile-Aula-03-03-2026",
+    "name": "sistema-consultas-mobile",
+    "slug": "sistema-consultas-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
