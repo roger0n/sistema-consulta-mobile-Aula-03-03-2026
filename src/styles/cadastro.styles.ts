@@ -35,6 +35,9 @@ const styles = StyleSheet.create({
  width: "100%",
  gap: 16,
  },
+ inputWrapper: {
+ width: "100%",
+ },
  input: {
  backgroundColor: "#fff",
  paddingVertical: 16,
@@ -42,6 +45,17 @@ const styles = StyleSheet.create({
  borderRadius: 12,
  fontSize: 16,
  color: "#333",
+ },
+ inputErro: {
+ borderWidth: 2,
+ borderColor: "#ff6b6b",
+ },
+ textoErro: {
+ color: "#ffcccc",
+ fontSize: 12,
+ marginTop: 6,
+ marginLeft: 4,
+ lineHeight: 16,
  },
  botao: {
  paddingVertical: 16,
@@ -69,4 +83,5 @@ const styles = StyleSheet.create({
  fontSize: 16,
  },
 });
+
 export default styles;
