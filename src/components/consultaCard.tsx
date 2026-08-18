@@ -23,13 +23,22 @@ export default function ConsultaCard({
 }: ConsultaCardProps) {
   const corStatus = obterCorStatus(consulta.status);
 
+  const ehPrioritaria = Boolean(consulta.prioridade || consulta.emergencia);
+
   return (
-    <View style={styles.card}>
+    <View style={[styles.card, ehPrioritaria && styles.cardEmergencia]}>
       {/* Cabeçalho com Status */}
-      <View style={[styles.statusBadge, { backgroundColor: corStatus }]}>
-        <Text style={styles.statusTexto}>
-          {obterTextoStatus(consulta.status)}
-        </Text>
+      <View style={styles.badgesRow}>
+        <View style={[styles.statusBadge, { backgroundColor: corStatus }]}>
+          <Text style={styles.statusTexto}>
+            {obterTextoStatus(consulta.status)}
+          </Text>
+        </View>
+        {ehPrioritaria && (
+          <View style={styles.emergenciaBadge}>
+            <Text style={styles.statusTexto}>🚨 PRIORITÁRIA</Text>
+          </View>
+        )}
       </View>
 
       {/* Informações Principais */}
@@ -101,23 +110,38 @@ export default function ConsultaCard({
 }
 
 const styles = StyleSheet.create({
- // ✅ DEPOIS (nova sintaxe boxShadow - Expo SDK 52+)
-card: {
- backgroundColor: "#fff",
- borderRadius: 12,
- padding: 16,
- marginVertical: 8,
- marginHorizontal: 16,
- boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
- elevation: 3,
-},
-
+  card: {
+    backgroundColor: "#fff",
+    borderRadius: 12,
+    padding: 16,
+    marginVertical: 8,
+    marginHorizontal: 16,
+    boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+    elevation: 3,
+  },
+  cardEmergencia: {
+    borderWidth: 2,
+    borderColor: "#B71C1C",
+    backgroundColor: "#FFF5F5",
+  },
+  badgesRow: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 8,
+    marginBottom: 12,
+  },
   statusBadge: {
     alignSelf: "flex-start",
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 16,
-    marginBottom: 12,
+  },
+  emergenciaBadge: {
+    alignSelf: "flex-start",
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 16,
+    backgroundColor: "#B71C1C",
   },
   statusTexto: {
     color: "#fff",

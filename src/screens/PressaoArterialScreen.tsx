@@ -1,0 +1,214 @@
+/**
+ * PressaoArterialScreen - Aferição de pressão arterial (simulação IoT)
+ * Paciente informa PAS/PAD manualmente; em gravidade (Estágio 3)
+ * o sistema agenda emergência com Cardiologia.
+ */
+
+import React, { useState } from "react";
+import styles from "../styles/PressaoArterialScreen.styles";
+import {
+    View,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    ScrollView,
+    Alert,
+    ActivityIndicator,
+} from "react-native";
+import { useAuth } from "../contexts/AuthContext";
+import pressaoService, {
+    CARDIOLOGISTA_EMERGENCIA,
+} from "../services/pressaoService";
+import {
+    classificarPressaoArterial,
+    validarValoresPA,
+} from "../utils/pressaoArterial";
+import { ResultadoPressaoArterial } from "../types/pressaoArterial";
+
+type PressaoArterialScreenProps = {
+    navigation: any;
+};
+
+export default function PressaoArterialScreen({
+    navigation,
+}: PressaoArterialScreenProps) {
+    const { usuario } = useAuth();
+    const [sistolica, setSistolica] = useState("");
+    const [diastolica, setDiastolica] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [resultado, setResultado] = useState<ResultadoPressaoArterial | null>(
+        null
+    );
+
+    async function handleRegistrar() {
+        if (!usuario) {
+            Alert.alert("Erro", "Faça login novamente.");
+            return;
+        }
+
+        const pas = parseInt(sistolica, 10);
+        const pad = parseInt(diastolica, 10);
+        const erro = validarValoresPA(pas, pad);
+
+        if (erro) {
+            Alert.alert("Valores inválidos", erro);
+            return;
+        }
+
+        setLoading(true);
+        try {
+            const { resultado: classificacao, consultaEmergencia } =
+                await pressaoService.registrarAfericao({
+                    pacienteId: usuario.id,
+                    pacienteNome: usuario.nome,
+                    sistolica: pas,
+                    diastolica: pad,
+                    origem: "manual",
+                });
+
+            setResultado(classificacao);
+
+            if (consultaEmergencia) {
+                Alert.alert(
+                    "🚨 Emergência detectada",
+                    `Sua pressão (${pas}/${pad} mmHg) indica gravidade.\n\nFoi agendada consulta PRIORITÁRIA com ${CARDIOLOGISTA_EMERGENCIA.nome} (Cardiologia).\n\nProcure atendimento imediatamente se houver sintomas (dor no peito, falta de ar, tontura intensa).`,
+                    [
+                        {
+                            text: "Ver consultas",
+                            onPress: () => navigation.navigate("ConsultasList"),
+                        },
+                        { text: "OK" },
+                    ]
+                );
+            } else {
+                Alert.alert(
+                    classificacao.titulo,
+                    `${pas}/${pad} mmHg\n\n${classificacao.descricao}`
+                );
+            }
+        } catch (error: any) {
+            Alert.alert(
+                "Erro",
+                error.message || "Não foi possível registrar a aferição."
+            );
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    function handleSimularPreview() {
+        const pas = parseInt(sistolica, 10);
+        const pad = parseInt(diastolica, 10);
+        const erro = validarValoresPA(pas, pad);
+        if (erro) {
+            Alert.alert("Valores inválidos", erro);
+            return;
+        }
+        setResultado(classificarPressaoArterial(pas, pad));
+    }
+
+    return (
+        <ScrollView
+            style={styles.container}
+            contentContainerStyle={styles.scrollContent}
+        >
+            <View style={styles.header}>
+                <Text style={styles.icone}>🩺</Text>
+                <Text style={styles.titulo}>Pressão Arterial</Text>
+                <Text style={styles.subtitulo}>
+                    Simulação de aferição (entrada manual - base IoT da aula)
+                </Text>
+            </View>
+
+            <View style={styles.cardInfo}>
+                <Text style={styles.cardInfoTitulo}>Referência (DBHA 2025)</Text>
+                <Text style={styles.cardInfoTexto}>Normal: &lt; 120 / &lt; 80</Text>
+                <Text style={styles.cardInfoTexto}>Pré-HA: 120 - 139 e/ou 80 - 89</Text>
+                <Text style={styles.cardInfoTexto}>Estágio 1: 140 - 159 e/ou 90 - 99</Text>
+                <Text style={styles.cardInfoTexto}>Estágio 2: 160 - 179 e/ou 100 - 109</Text>
+                <Text style={[styles.cardInfoTexto, styles.destaque]}>
+                    Estágio 3 (emergência): ≥ 180 e/ou ≥ 110
+                </Text>
+            </View>
+
+            <View style={styles.form}>
+                <Text style={styles.label}>Pressão Sistólica (PAS) - mmHg *</Text>
+                <TextInput
+                    style={styles.input}
+                    placeholder="Ex: 120"
+                    placeholderTextColor="#999"
+                    keyboardType="numeric"
+                    maxLength={3}
+                    value={sistolica}
+                    onChangeText={setSistolica}
+                    editable={!loading}
+                />
+
+                <Text style={styles.label}>Pressão Diastólica (PAD) - mmHg *</Text>
+                <TextInput
+                    style={styles.input}
+                    placeholder="Ex: 80"
+                    placeholderTextColor="#999"
+                    keyboardType="numeric"
+                    maxLength={3}
+                    value={diastolica}
+                    onChangeText={setDiastolica}
+                    editable={!loading}
+                />
+
+                <TouchableOpacity
+                    style={[styles.botao, styles.botaoSecundario]}
+                    onPress={handleSimularPreview}
+                    disabled={loading}
+                >
+                    <Text style={styles.botaoTextoSecundario}>Classificar (prévia)</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    style={[styles.botao, styles.botaoPrimario]}
+                    onPress={handleRegistrar}
+                    disabled={loading}
+                >
+                    {loading ? (
+                        <ActivityIndicator color="#fff" />
+                    ) : (
+                        <Text style={styles.botaoTexto}>Registrar aferição</Text>
+                    )}
+                </TouchableOpacity>
+            </View>
+
+            {resultado && (
+                <View
+                    style={[
+                        styles.resultado,
+                        {
+                            borderColor: resultado.cor,
+                            backgroundColor: resultado.ehEmergencia ? "#FFEBEE" : "#fff",
+                        },
+                    ]}
+                >
+                    <Text style={[styles.resultadoTitulo, { color: resultado.cor }]}>
+                        {resultado.titulo}
+                    </Text>
+                    <Text style={styles.resultadoValor}>
+                        {resultado.sistolica}/{resultado.diastolica} mmHg
+                    </Text>
+                    <Text style={styles.resultadoDescricao}>{resultado.descricao}</Text>
+                    {resultado.ehEmergencia && (
+                        <Text style={styles.resultadoEmergencia}>
+                            Consulta prioritária com {CARDIOLOGISTA_EMERGENCIA.nome} é
+                            acionada automaticamente ao registrar a aferição.
+                        </Text>
+                    )}
+                </View>
+            )}
+
+            <Text style={styles.aviso}>
+                Esta tela é educacional e não substitui avaliação médica presencial.
+                Em sintomas graves, procure emergência (SAMU 192).
+            </Text>
+        </ScrollView>
+    );
+}
+
+

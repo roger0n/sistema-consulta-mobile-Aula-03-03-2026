@@ -1,16 +1,16 @@
 import { StyleSheet } from "react-native";
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#f5f5f5",
     },
     scrollContent: {
-        padding: 20,
-        paddingBottom: 40,
+        flexGrow: 1,
     },
     header: {
-        marginBottom: 32,
+        backgroundColor: "#79059C",
+        padding: 32,
+        paddingTop: 48,
         alignItems: "center",
     },
     icone: {
@@ -20,50 +20,41 @@ const styles = StyleSheet.create({
     titulo: {
         fontSize: 28,
         fontWeight: "bold",
-        color: "#79059C",
+        color: "#fff",
         marginBottom: 8,
     },
     subtitulo: {
         fontSize: 16,
-        color: "#666",
+        color: "#fff",
+        opacity: 0.9,
     },
-    menu: {
+    menuContainer: {
+        padding: 20,
         gap: 16,
     },
-    card: {
+    menuItem: {
         padding: 24,
         borderRadius: 16,
-        boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+        boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.1)",
         elevation: 3,
     },
-    cardPrimario: {
-        backgroundColor: "#79059C",
-    },
-    cardSecundario: {
-        backgroundColor: "#4CAF50",
-    },
-    cardTerciario: {
-        backgroundColor: "#FF9800",
-    },
-    cardPressao: {
-        backgroundColor: "#C62828",
-    },
-    cardIcone: {
-        fontSize: 48,
+    menuIcone: {
+        fontSize: 40,
         marginBottom: 12,
     },
-    cardTitulo: {
+    menuTitulo: {
         fontSize: 20,
         fontWeight: "bold",
         color: "#fff",
-        marginBottom: 8,
+        marginBottom: 4,
     },
-    cardDescricao: {
+    menuDescricao: {
         fontSize: 14,
         color: "#fff",
         opacity: 0.9,
     },
     logoutButton: {
+        margin: 20,
         marginTop: 32,
         padding: 16,
         backgroundColor: "#fff",
@@ -78,8 +69,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
     footer: {
-        marginTop: 24,
-        paddingTop: 20,
+        padding: 20,
         alignItems: "center",
     },
     footerText: {
@@ -89,7 +79,6 @@ const styles = StyleSheet.create({
     footerSubtext: {
         fontSize: 10,
         color: "#999",
-        marginTop: 4,
     },
 });
 export default styles;

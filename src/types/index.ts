@@ -44,11 +44,19 @@ export type Consulta = {
   medicoId: number;
   medicoNome: string;
   especialidade: Especialidade;
+  usuarioId: number; // ID do usuário que agendou a consulta
   data: string;
   horario: string;
   status: StatusConsulta;
   observacoes?: string;
-};
+  valor?: number;
+  /** Consulta gerada por gravidade de pressão arterial */
+  prioridade?: boolean;
+  emergencia?: boolean;
+  pressaoSistolica?: number;
+  pressaoDiastolica?: number;
+  classificacaoPA?: string; // Classificação da pressão arterial (ex: "Normal", "Elevada", "Hipertensão")
+}
 
 // ===== TIPOS PARA FORMULÁRIOS =====
 
