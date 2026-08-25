@@ -1,7 +1,7 @@
 /**
  * Navigation - Configuração de Rotas com Autenticação
  * Define a navegação do aplicativo usando React Navigation
- * Controla acesso baseado no perfil do usuário (admin/paciente)
+ * Controla acesso baseado no perfil do usuário (admin/medico/paciente)
  */
 
 import React, { useEffect } from "react";
@@ -11,6 +11,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useAuth } from "../contexts/AuthContext";
 import {
     HomeScreen,
+    MedicoHomeScreen,
     ConsultasListScreen,
     ConsultaDetalhesScreen,
     NovaConsultaScreen,
@@ -26,6 +27,7 @@ import {
 export type RootStackParamList = {
     Login: undefined;
     Home: undefined;
+    MedicoHome: undefined;
     ConsultasList: undefined;
     ConsultaDetalhes: { consultaId: number };
     NovaConsulta: undefined;
@@ -38,21 +40,31 @@ export type RootStackParamList = {
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-export default function Navigation() {
-    const { usuario, loading, logout } = useAuth();
+function emojiPerfil(perfil?: string) {
+    if (perfil === "admin") return "👨‍💼";
+    if (perfil === "medico") return "👨‍⚕️";
+    return "👤";
+}
 
-    // Log mudanças no estado de autenticação
+export default function Navigation() {
+    const { usuario, loading } = useAuth();
+
     useEffect(() => {
         if (!loading) {
             if (usuario) {
-                console.log("🔐 Navigation: Usuário logado ->", usuario.nome, `(${usuario.perfil})`);
+                console.log(
+                    "🔐 Navigation: Usuário logado ->",
+                    usuario.nome,
+                    `(${usuario.perfil})`
+                );
             } else {
-                console.log("🔓 Navigation: Nenhum usuário logado - Mostrando tela de Login");
+                console.log(
+                    "🔓 Navigation: Nenhum usuário logado - Mostrando tela de Login"
+                );
             }
         }
     }, [usuario, loading]);
 
-    // Mostra loading enquanto verifica autenticação
     if (loading) {
         console.log("⏳ Navigation: Carregando estado de autenticação...");
         return (
@@ -73,23 +85,21 @@ export default function Navigation() {
                     headerTitleStyle: {
                         fontWeight: "bold",
                     },
-                    headerRight: () => (
+                    headerRight: () =>
                         usuario ? (
                             <View style={styles.headerRight}>
                                 <View style={styles.userBadge}>
                                     <View style={styles.userInfo}>
                                         <Text style={styles.userName}>
-                                            {usuario.perfil === "admin" ? "👨‍💼" : "👤"} {usuario.nome}
+                                            {emojiPerfil(usuario.perfil)} {usuario.nome}
                                         </Text>
                                     </View>
                                 </View>
                             </View>
-                        ) : null
-                    ),
+                        ) : null,
                 }}
             >
                 {!usuario ? (
-                    // Usuário NÃO autenticado - apenas Login e Cadastro
                     <>
                         <Stack.Screen
                             name="Login"
@@ -109,7 +119,6 @@ export default function Navigation() {
                         />
                     </>
                 ) : usuario.perfil === "admin" ? (
-                    // Usuário ADMIN - acesso total
                     <>
                         <Stack.Screen
                             name="Admin"
@@ -140,8 +149,31 @@ export default function Navigation() {
                             }}
                         />
                     </>
+                ) : usuario.perfil === "medico" ? (
+                    <>
+                        <Stack.Screen
+                            name="MedicoHome"
+                            component={MedicoHomeScreen}
+                            options={{
+                                title: "Área do Médico",
+                            }}
+                        />
+                        <Stack.Screen
+                            name="ConsultasList"
+                            component={ConsultasListScreen}
+                            options={{
+                                title: "Minha Agenda",
+                            }}
+                        />
+                        <Stack.Screen
+                            name="ConsultaDetalhes"
+                            component={ConsultaDetalhesScreen}
+                            options={{
+                                title: "Detalhes da Consulta",
+                            }}
+                        />
+                    </>
                 ) : (
-                    // Usuário PACIENTE - acesso limitado
                     <>
                         <Stack.Screen
                             name="Home"
@@ -222,4 +254,3 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
     },
 });
-

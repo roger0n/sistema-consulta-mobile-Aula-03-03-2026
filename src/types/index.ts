@@ -3,19 +3,15 @@
  * Aplicando conceitos de Type Alias, Union Types e Literal Types
  */
 
+import { Especialidade } from "./especialidade";
+
 // ===== STATUS E ENUMS =====
 
 export type StatusConsulta = "agendada" | "confirmada" | "cancelada" | "realizada";
 
 export type TipoUsuario = "paciente" | "medico" | "admin";
 
-export type Especialidade =
-  | "Cardiologia"
-  | "Dermatologia"
-  | "Ortopedia"
-  | "Pediatria"
-  | "Psiquiatria"
-  | "Clínica Geral";
+
 
 // ===== ENTIDADES PRINCIPAIS =====
 
@@ -44,7 +40,6 @@ export type Consulta = {
   medicoId: number;
   medicoNome: string;
   especialidade: Especialidade;
-  usuarioId: number; // ID do usuário que agendou a consulta
   data: string;
   horario: string;
   status: StatusConsulta;

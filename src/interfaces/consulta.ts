@@ -1,4 +1,5 @@
-import { StatusConsulta, Especialidade } from "../types";
+import { StatusConsulta,  } from "../types";
+import { Especialidade } from "../types/especialidade";
 import { ClassificacaoPA } from "../types/pressaoArterial";
 
 export interface Consulta {
