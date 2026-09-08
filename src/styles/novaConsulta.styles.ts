@@ -1,155 +1,189 @@
 import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
- container: {
- flex: 1,
- backgroundColor: "#79059C",
- },
- scrollContent: {
- flexGrow: 1,
- },
- content: {
- flex: 1,
- padding: 24,
- paddingTop: 60,
- },
- titulo: {
- fontSize: 28,
- fontWeight: "bold",
- color: "#fff",
- marginBottom: 8,
- },
- subtitulo: {
- fontSize: 16,
- color: "#fff",
- opacity: 0.9,
- marginBottom: 32,
- },
- formContainer: {
- gap: 20,
- },
- label: {
- fontSize: 14,
- fontWeight: "600",
- color: "#fff",
- marginBottom: 8,
- },
- input: {
- backgroundColor: "#fff",
- paddingVertical: 16,
- paddingHorizontal: 20,
- borderRadius: 12,
- fontSize: 16,
- color: "#333",
- },
- textArea: {
- height: 100,
- paddingTop: 16,
- },
- selector: {
- backgroundColor: "#fff",
- padding: 16,
- borderRadius: 12,
- },
- selectorLabel: {
- fontSize: 12,
- color: "#666",
- marginBottom: 4,
- },
- selectorValue: {
- fontSize: 16,
- color: "#333",
- fontWeight: "500",
- },
- selectorDisabled: {
- color: "#999",
- },
- botao: {
- paddingVertical: 16,
- paddingHorizontal: 32,
- borderRadius: 12,
- alignItems: "center",
- marginTop: 8,
- },
- botaoPrimario: {
- backgroundColor: "#fff",
- },
- botaoSecundario: {
- backgroundColor: "transparent",
- borderWidth: 2,
- borderColor: "#fff",
- },
- botaoTexto: {
- color: "#79059C",
- fontWeight: "bold",
- fontSize: 16,
- },
- botaoTextoSecundario: {
- color: "#fff",
- fontWeight: "bold",
- fontSize: 16,
- },
- modalOverlay: {
- flex: 1,
- backgroundColor: "rgba(0, 0, 0, 0.5)",
- justifyContent: "flex-end",
- },
- modalContent: {
- backgroundColor: "#fff",
- borderTopLeftRadius: 20,
- borderTopRightRadius: 20,
- padding: 24,
- maxHeight: "80%",
- },
- modalTitulo: {
- fontSize: 20,
- fontWeight: "bold",
- color: "#333",
- marginBottom: 20,
- textAlign: "center",
- },
- modalItem: {
- paddingVertical: 16,
- borderBottomWidth: 1,
- borderBottomColor: "#eee",
- },
- modalItemTexto: {
- fontSize: 16,
- color: "#333",
- fontWeight: "500",
- },
- modalItemSubtexto: {
- fontSize: 14,
- color: "#666",
- marginTop: 4,
- },
- modalBotaoFechar: {
- marginTop: 20,
- paddingVertical: 14,
- backgroundColor: "#f0f0f0",
- borderRadius: 12,
- alignItems: "center",
- },
- modalBotaoTexto: {
- fontSize: 16,
- color: "#666",
- fontWeight: "600",
- },
- horarioGrid: {
- justifyContent: "space-between",
- marginBottom: 12,
- },
- horarioItem: {
- backgroundColor: "#79059C",
- paddingVertical: 12,
- paddingHorizontal: 20,
- borderRadius: 8,
- flex: 0.3,
- alignItems: "center",
- },
- horarioTexto: {
- color: "#fff",
- fontSize: 16,
- fontWeight: "600",
- },
+    container: {
+        flex: 1,
+        backgroundColor: "#f5f5f5",
+    },
+    scrollContent: {
+        paddingBottom: 40,
+    },
+    header: {
+        backgroundColor: "#79059C",
+        paddingTop: 20,
+        paddingBottom: 32,
+        paddingHorizontal: 24,
+    },
+    headerTitulo: {
+        fontSize: 26,
+        fontWeight: "bold",
+        color: "#fff",
+        marginBottom: 6,
+    },
+    headerSubtitulo: {
+        fontSize: 14,
+        color: "#fff",
+        opacity: 0.85,
+    },
+    form: {
+        padding: 20,
+        gap: 8,
+    },
+    label: {
+        fontSize: 14,
+        fontWeight: "600",
+        color: "#444",
+        marginTop: 12,
+        marginBottom: 4,
+    },
+    input: {
+        backgroundColor: "#fff",
+        borderWidth: 1,
+        borderColor: "#ddd",
+        borderRadius: 10,
+        paddingVertical: 14,
+        paddingHorizontal: 16,
+        fontSize: 16,
+        color: "#333",
+    },
+    inputMultiline: {
+        height: 100,
+        paddingTop: 14,
+    },
+    selector: {
+        backgroundColor: "#fff",
+        borderWidth: 1,
+        borderColor: "#ddd",
+        borderRadius: 10,
+        paddingVertical: 14,
+        paddingHorizontal: 16,
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+    },
+    selectorDesabilitado: {
+        backgroundColor: "#f0f0f0",
+        borderColor: "#e0e0e0",
+    },
+    selectorTexto: {
+        fontSize: 16,
+        color: "#333",
+        flex: 1,
+    },
+    selectorPlaceholder: {
+        fontSize: 16,
+        color: "#aaa",
+        flex: 1,
+    },
+    selectorIcone: {
+        fontSize: 12,
+        color: "#79059C",
+        marginLeft: 8,
+    },
+    botaoAgendar: {
+        backgroundColor: "#79059C",
+        paddingVertical: 16,
+        borderRadius: 12,
+        alignItems: "center",
+        marginTop: 24,
+    },
+    botaoDesabilitado: {
+        opacity: 0.6,
+    },
+    botaoAgendarTexto: {
+        color: "#fff",
+        fontWeight: "bold",
+        fontSize: 16,
+    },
+    botaoCancelar: {
+        paddingVertical: 14,
+        borderRadius: 12,
+        alignItems: "center",
+        borderWidth: 2,
+        borderColor: "#79059C",
+        marginTop: 8,
+    },
+    botaoCancelarTexto: {
+        color: "#79059C",
+        fontWeight: "bold",
+        fontSize: 16,
+    },
+    // ── Modal ──
+    modalOverlay: {
+        flex: 1,
+        backgroundColor: "rgba(0,0,0,0.5)",
+        justifyContent: "flex-end",
+    },
+    modalContainer: {
+        backgroundColor: "#fff",
+        borderTopLeftRadius: 24,
+        borderTopRightRadius: 24,
+        padding: 24,
+        maxHeight: "70%",
+    },
+    modalTitulo: {
+        fontSize: 18,
+        fontWeight: "bold",
+        color: "#333",
+        marginBottom: 16,
+        textAlign: "center",
+    },
+    modalItem: {
+        paddingVertical: 14,
+        paddingHorizontal: 16,
+        borderRadius: 8,
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        marginBottom: 4,
+    },
+    modalItemSelecionado: {
+        backgroundColor: "#f3e5f5",
+    },
+    modalItemTexto: {
+        fontSize: 16,
+        color: "#333",
+    },
+    modalItemTextoSelecionado: {
+        color: "#79059C",
+        fontWeight: "600",
+    },
+    modalFechar: {
+        marginTop: 16,
+        backgroundColor: "#79059C",
+        paddingVertical: 14,
+        borderRadius: 10,
+        alignItems: "center",
+    },
+    modalFecharTexto: {
+        color: "#fff",
+        fontWeight: "bold",
+        fontSize: 16,
+    },
+    // ── Horários ──
+    horariosGrid: {
+        justifyContent: "space-between",
+        marginBottom: 8,
+    },
+    horarioItem: {
+        flex: 1,
+        marginHorizontal: 4,
+        paddingVertical: 12,
+        borderRadius: 8,
+        borderWidth: 1,
+        borderColor: "#ddd",
+        alignItems: "center",
+    },
+    horarioItemSelecionado: {
+        backgroundColor: "#79059C",
+        borderColor: "#79059C",
+    },
+    horarioItemTexto: {
+        fontSize: 15,
+        color: "#333",
+        fontWeight: "500",
+    },
+    horarioItemTextoSelecionado: {
+        color: "#fff",
+    },
 });
 export default styles;
